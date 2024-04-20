@@ -1,6 +1,6 @@
 package petStore.entity;
+import lombok.Data;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,8 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -23,12 +24,12 @@ public class PetStore {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long petStoreID;
+	private @Getter @Setter Long petStoreID;
 	
-	private String petStoreAddress;
-	private String petStoreCity;
-	private Integer petStoreZip;
-	private String petStorePhone;
+	private @Getter @Setter String petStoreAddress;
+	private @Getter @Setter String petStoreCity;
+	private @Getter @Setter Integer petStoreZip;
+	private @Getter @Setter String petStorePhone;
 	
 	//how to set up many to many
 	//declare join table

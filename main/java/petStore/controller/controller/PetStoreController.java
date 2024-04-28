@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import petStore.controller.model.PetStoreCustomer;
 import petStore.controller.model.PetStoreData;
+import petStore.controller.model.PetStoreEmployee;
 import petStore.service.PetStoreService;
 
 @RestController
@@ -27,15 +29,38 @@ public class PetStoreController {
 	@Autowired
 	private PetStoreService petStoreService;
 	
+	
+	//CREATE METHODS
+	
+	//create a petstore
 	@PostMapping("/pet_store")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public PetStoreData createPetStore(@RequestBody PetStoreData petStoreData)
 	{
-		log.info("This is a log line");
+		log.info("Creating new pet store");
 		return petStoreService.savePetStore(petStoreData);
 	}
 	
+	//create an employee
+	@PostMapping("/pet_store/{petStoreID}/employee")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public PetStoreEmployee createEmployee(@RequestBody PetStoreEmployee employeeData, long petStoreID)
+	{
+		log.info("Creating new employee!");
+		return petStoreService.saveEmployee(employeeData, petStoreID);
+	}
 	
+	//create a customer
+	@PostMapping("/pet_store/cusomter")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public PetStoreCustomer createCustomer (@RequestBody PetStoreCustomer customerData)
+	{
+		log.info("Creating new customer!");
+		return petStoreService.saveCustomer(customerData);
+	}
+	
+	
+	//UPDATE METHODS
 	@PutMapping("/pet_store/{petStoreID}")
 	public PetStoreData updatePetStore(@PathVariable long petStoreID, @RequestBody PetStoreData petStoreData)
 	{
@@ -45,6 +70,7 @@ public class PetStoreController {
 		
 	}
 	
+	//RETRIEVE METHODS
 	//retrieve all petStores
 	@GetMapping("/pet_store")
 	public List<PetStoreData> retrieveAllPetStores()
@@ -64,6 +90,7 @@ public class PetStoreController {
 		
 	}
 	
+	//DELETE METHODS
 	@DeleteMapping("/pet_store")
 	public void deteleAllPetStores()
 	{

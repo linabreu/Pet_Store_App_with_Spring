@@ -12,13 +12,13 @@ public class PetStoreCustomer {
 	{
 		customerID = customer.getCustomerID();
 		customerFirstName = customer.getCustomerFirstName();
-		custoemrLastName = customer.getCustoemrLastName();
+		customerLastName = customer.getCustomerLastName();
 		customerEmail = customer.getCustomerEmail();
 	}
 	
 	private Long customerID;
 	private String customerFirstName;
-	private String custoemrLastName;
+	private String customerLastName;
 	private String customerEmail;
 	
 

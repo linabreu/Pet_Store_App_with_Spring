@@ -21,13 +21,13 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long customerID;
 	private String customerFirstName;
-	private String custoemrLastName;
+	private String customerLastName;
 	private String customerEmail;
 	
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@ManyToMany(mappedBy = "customers", cascade = CascadeType.PERSIST)
+	@ManyToMany(mappedBy = "pet_store_customer", cascade = CascadeType.PERSIST)
 	private Set<PetStore> petstores = new HashSet<>();
 
 }

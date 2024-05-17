@@ -17,7 +17,7 @@ public class PetStoreData {
 	
 	private String petStoreAddress;
 	private String petStoreCity;
-	private Integer petStoreZip;
+	private String petStoreZip;
 	private String petStorePhone;
 	
 	private Set<PetStoreCustomer> customers = new HashSet<>();

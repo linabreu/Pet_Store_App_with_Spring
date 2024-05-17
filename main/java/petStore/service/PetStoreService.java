@@ -133,15 +133,18 @@ public class PetStoreService {
 	@Transactional(readOnly = false)
 	public PetStoreEmployee saveEmployee (PetStoreEmployee employeeData,Long petStoreID)
 	{
-		Long employeeID = employeeData.getEmployeeID();
+		PetStore petStore = findPetStoreById(petStoreID);
+		Long employeeID = employeeData.getEmployeeId();
 		Employee employee = findOrCreateEmployee(employeeID, petStoreID);
 		copyEmployeeFields(employee, employeeData);
+		employee.setPetStore(petStore);
+		petStore.getEmployees().add(employee);
 		return new PetStoreEmployee(employeeDao.save(employee));
 	}
 	
 	private void copyEmployeeFields(Employee employee, PetStoreEmployee employeeData) 
 	{
-		employee.setEmployeeID(employeeData.getEmployeeID());
+		employee.setEmployeeId(employeeData.getEmployeeId());
 		employee.setEmployeeFirstName(employeeData.getEmployeeFirstName());
 		employee.setEmployeeLastName(employeeData.getEmployeeLastName());
 		employee.setEmployeeJobTitle(employeeData.getEmployeeJobTitle());
@@ -169,15 +172,18 @@ public class PetStoreService {
 	}
 	
 	//CUSTOMER SERVICE METHODS ------------------------------------------------------------------------------
-	public PetStoreCustomer saveCustomer(PetStoreCustomer customerData) 
+	public PetStoreCustomer saveCustomer(PetStoreCustomer customerData, Long petStoreID) 
 	{
-		Long customerID = customerData.getCustomerID();
-		Customer customer = findOrCreateCustomer(customerID);
+		PetStore petStore = findPetStoreById(petStoreID);
+		Long customerID = customerData.getCustomerId();
+		Customer customer = findOrCreateCustomer(customerID, petStoreID );
 		copyCustomerFields(customer, customerData);
+		customer.getPetstores().add(petStore);
+		petStore.getCustomers().add(customer);
 		return new PetStoreCustomer(customerDao.save(customer));
 	}
 	
-	private Customer findOrCreateCustomer(Long customerID) 
+	private Customer findOrCreateCustomer(Long customerID, Long petStoreID) 
 	{
 		Customer customer;
 		if (Objects.isNull(customerID))
@@ -186,19 +192,35 @@ public class PetStoreService {
 		}
 		else
 		{
-			customer = findCustomerById(customerID);
+			customer = findCustomerById(customerID, petStoreID);
 		}
 		return customer;
 	}
 	
-	private Customer findCustomerById(Long customerID) 
+	private Customer findCustomerById(Long customerID, Long petStoreID) 
 	{
-		return customerDao.findById(customerID).orElseThrow(
+		Customer customer = customerDao.findById(customerID).orElseThrow(
 				()-> new NoSuchElementException("Customer with ID " + customerID + " was not found!"));
+		
+		boolean found = false;
+		for (PetStore petStore: customer.getPetstores())
+		{
+			if(petStore.getPetStoreID() == petStoreID)
+			{
+				found = true;
+				break;
+			}	
+		}
+		if(!found)
+		{
+			throw new IllegalArgumentException("Customer with" + customerID + " not in petStore with " + petStoreID);
+		}
+		return customer;
 	}
 	
 	private void copyCustomerFields(Customer customer, PetStoreCustomer customerData) 
 	{
+		customer.setCustomerId(customerData.getCustomerId());
 		customer.setCustomerFirstName(customerData.getCustomerFirstName());
 		customer.setCustomerLastName(customerData.getCustomerLastName());
 		customer.setCustomerEmail(customerData.getCustomerEmail());

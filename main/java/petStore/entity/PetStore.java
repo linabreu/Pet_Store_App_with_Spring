@@ -24,12 +24,12 @@ public class PetStore {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private @Getter @Setter Long petStoreID;
+	private Long petStoreID;
 	
-	private @Getter @Setter String petStoreAddress;
-	private @Getter @Setter String petStoreCity;
-	private @Getter @Setter Integer petStoreZip;
-	private @Getter @Setter String petStorePhone;
+	private String petStoreAddress;
+	private String petStoreCity;
+	private String petStoreZip;
+	private String petStorePhone;
 	
 	//how to set up many to many
 	//declare join table
@@ -39,7 +39,7 @@ public class PetStore {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "customer", joinColumns = 
+	@JoinTable(name = "pet_store_customer", joinColumns = 
 		@JoinColumn(name = "pet_store_id"), inverseJoinColumns =
 		@JoinColumn(name = "customer_id"))
 	private Set<Customer> customers = new HashSet<>();

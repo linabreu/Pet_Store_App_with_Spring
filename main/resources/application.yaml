@@ -6,9 +6,5 @@ spring:
    
    jpa:
      hibernate:
-        ddl-auto: create 
+        ddl-auto: update 
      show-sql: true
-     def-datasource-initialization: true
-   
-   server:
-     port: 8081

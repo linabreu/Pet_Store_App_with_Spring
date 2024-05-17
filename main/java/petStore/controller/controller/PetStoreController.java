@@ -32,8 +32,8 @@ public class PetStoreController {
 	
 	//CREATE METHODS
 	
-	//create a petstore
-	@PostMapping("/pet_store")
+	//create a pet store
+	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public PetStoreData createPetStore(@RequestBody PetStoreData petStoreData)
 	{
@@ -42,27 +42,27 @@ public class PetStoreController {
 	}
 	
 	//create an employee
-	@PostMapping("/pet_store/{petStoreID}/employee")
+	@PostMapping("/{petStoreID}/employee")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public PetStoreEmployee createEmployee(@RequestBody PetStoreEmployee employeeData, long petStoreID)
+	public PetStoreEmployee createEmployee(@RequestBody PetStoreEmployee employeeData, @PathVariable Long petStoreID)
 	{
 		log.info("Creating new employee!");
 		return petStoreService.saveEmployee(employeeData, petStoreID);
 	}
 	
 	//create a customer
-	@PostMapping("/pet_store/cusomter")
+	@PostMapping("/{petStoreID}/customer")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public PetStoreCustomer createCustomer (@RequestBody PetStoreCustomer customerData)
+	public PetStoreCustomer createCustomer (@RequestBody PetStoreCustomer customerData, @PathVariable Long petStoreID)
 	{
 		log.info("Creating new customer!");
-		return petStoreService.saveCustomer(customerData);
+		return petStoreService.saveCustomer(customerData, petStoreID);
 	}
 	
 	
 	//UPDATE METHODS
-	@PutMapping("/pet_store/{petStoreID}")
-	public PetStoreData updatePetStore(@PathVariable long petStoreID, @RequestBody PetStoreData petStoreData)
+	@PutMapping("/{petStoreID}")
+	public PetStoreData updatePetStore(@PathVariable Long petStoreID, @RequestBody PetStoreData petStoreData)
 	{
 		petStoreData.setPetStoreID(petStoreID);
 		log.info("Updating petStore #{}", petStoreData);
@@ -82,7 +82,7 @@ public class PetStoreController {
 	//pet_store is the resource ID
 	//pet_store is application
 	
-	@GetMapping("/pet_store/{petStoreID}")
+	@GetMapping("/{petStoreID}")
 	public PetStoreData retrievePetStoreById(@PathVariable Long petStoreID)
 	{
 		log.info("Retrieving pet store with ID = {petStoreID}");
@@ -91,7 +91,7 @@ public class PetStoreController {
 	}
 	
 	//DELETE METHODS
-	@DeleteMapping("/pet_store")
+	@DeleteMapping
 	public void deteleAllPetStores()
 	{
 		log.info("Attempting to delete all pet stores!");
@@ -99,7 +99,7 @@ public class PetStoreController {
 	}
 	
 	//delete single pet store
-	@DeleteMapping("/pet_store/{petStoreID}")
+	@DeleteMapping("{petStoreID}")
 	public Map<String, String> deletePetStoreByID (@PathVariable Long petStoreID) {
 		log.info("Deleting pet store with ID = {petStoreID}");
 		petStoreService.deletePetStoreByID(petStoreID);

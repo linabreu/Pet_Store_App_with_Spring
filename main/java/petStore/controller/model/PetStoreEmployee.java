@@ -10,15 +10,13 @@ public class PetStoreEmployee {
 	
 	public PetStoreEmployee(Employee employee) 
 	{
-		employeeID = employee.getEmployeeID();
-		petStoreID = employee.getPetStoreID();
+		employeeId = employee.getEmployeeId();
 		employeeFirstName = employee.getEmployeeFirstName();
 		employeeLastName = employee.getEmployeeLastName();
 		employeePhoneNumber = employee.getEmployeePhoneNumber();
 		employeeJobTitle = employee.getEmployeeJobTitle();
 	}
-	private Long employeeID;
-	private Long petStoreID;
+	private Long employeeId;
 	private String employeeFirstName;
 	private String employeeLastName;
 	private String employeePhoneNumber;

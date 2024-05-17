@@ -17,10 +17,9 @@ public class Employee {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long employeeID;
+	private Long employeeId;
 	
 	
-	private Long petStoreID;
 	private String employeeFirstName;
 	private String employeeLastName;
 	private String employeePhoneNumber;

@@ -19,7 +19,8 @@ public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long customerID;
+	private Long customerId;
+	
 	private String customerFirstName;
 	private String customerLastName;
 	private String customerEmail;
@@ -27,7 +28,7 @@ public class Customer {
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@ManyToMany(mappedBy = "pet_store_customer", cascade = CascadeType.PERSIST)
+	@ManyToMany(mappedBy = "customers", cascade = CascadeType.PERSIST)
 	private Set<PetStore> petstores = new HashSet<>();
 
 }
